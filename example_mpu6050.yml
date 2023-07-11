@@ -1,0 +1,159 @@
+substitutions:
+  device_name: Vibration-01
+  sensor_name: MPU6050
+
+esphome:
+  name: vibration-01
+  friendly_name: ${device_name}
+
+external_components:
+  # use all components from a local folder
+  # - source:
+  #     type: local
+  #     path: my_components
+  - source: github://svrooij/esphome-components@dev
+    components: [ mpu6050 ]  
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: INFO
+
+# Enable Home Assistant API
+# api:
+#   encryption:
+#     key: ".....❌......"
+
+# ota:
+#   password: "😉"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: '192.168.x.x'
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "${device_name} Fallback Hotspot"
+    password: "123456789"
+
+#captive_portal:
+
+#web_server:
+
+i2c:
+  sda: 21
+  scl: 22
+  scan: true
+  id: bus_a
+
+# Example configuration entry
+sensor:
+  - platform: mpu6050
+    accel_x:
+      name: "MPU6050 Accel X"
+      id: accel_x_int
+      filters:
+        - offset: 0.153
+    accel_y:
+      name: "MPU6050 Accel Y"
+      id: accel_y_int
+      # filters:
+      #   - offset: -2.68
+    accel_z:
+      name: "MPU6050 Accel Z"
+      id: accel_z_int
+      filters:
+        - offset: -9.989
+    gyro_x:
+      name: "MPU6050 Gyro X"
+      filters:
+        - throttle_average: 5s
+    gyro_y:
+      name: "MPU6050 Gyro Y"
+      filters:
+        - throttle_average: 5s
+    gyro_z:
+      name: "MPU6050 Gyro Z"
+      filters:
+        - throttle_average: 5s
+    temperature:
+      name: "MPU6050 Temperature"
+      filters:
+        - throttle_average: 5s
+
+  # # Copied sensors X
+  # - platform: copy
+  #   source_id: accel_x_int
+  #   id: accel_x
+  #   name: "${sensor_name} Accel X (avg)"
+  #   filters:
+  #     - throttle_average: 5s
+
+  # - platform: copy
+  #   source_id: accel_x_int
+  #   name: "${sensor_name} Accel X (max)"
+  #   filters:
+  #     - max:
+  #         window_size: 10
+  #         send_every: 10
+
+  # - platform: copy
+  #   source_id: accel_x_int
+  #   name: "${sensor_name} Accel X (min)"
+  #   filters:
+  #     - min:
+  #         window_size: 10
+  #         send_every: 10
+
+  # # Copied sensors Y
+  # - platform: copy
+  #   source_id: accel_y_int
+  #   id: accel_y
+  #   name: "${sensor_name} Accel Y (avg)"
+  #   filters:
+  #     - throttle_average: 5s
+
+  # - platform: copy
+  #   source_id: accel_y_int
+  #   name: "${sensor_name} Accel Y (max)"
+  #   filters:
+  #     - max:
+  #         window_size: 10
+  #         send_every: 10
+
+  # - platform: copy
+  #   source_id: accel_y_int
+  #   name: "${sensor_name} Accel Y (min)"
+  #   filters:
+  #     - min:
+  #         window_size: 10
+  #         send_every: 10
+
+  # # Copied sensors Z
+  # - platform: copy
+  #   source_id: accel_z_int
+  #   id: accel_z
+  #   name: "${sensor_name} Accel Z (avg)"
+  #   filters:
+  #     - throttle_average: 5s
+
+  # - platform: copy
+  #   source_id: accel_z_int
+  #   name: "${sensor_name} Accel Z (max)"
+  #   filters:
+  #     - max:
+  #         window_size: 10
+  #         send_every: 10
+
+  # - platform: copy
+  #   source_id: accel_z_int
+  #   name: "${sensor_name} Accel Z (min)"
+  #   filters:
+  #     - min:
+  #         window_size: 10
+  #         send_every: 10
