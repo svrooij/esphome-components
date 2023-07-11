@@ -11,7 +11,7 @@ external_components:
   # - source:
   #     type: local
   #     path: my_components
-  - source: github://svrooij/esphome-components@dev
+  - source: github://svrooij/esphome-components@main
     components: [ mpu6050 ]  
 
 esp32:

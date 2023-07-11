@@ -15,7 +15,7 @@ This MPU6050 component uses the build in motion detection instead off pulling. T
       # - source:
       #     type: local
       #     path: my_components
-      - source: github://svrooij/esphome-components@dev
+      - source: github://svrooij/esphome-components@main
         components: [ mpu6050 ]
     
     sensor:
